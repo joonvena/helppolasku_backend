@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  pdf-service:
+    build: ./pdf-service
+    environment:
+      PORT: 9000
+    ports:
+      - "9009:9000"
+
+  barcode-service:
+    build: ./barcode-service
+    environment:
+      PORT: 9001
+    ports:
+      - "9001:9001"
