@@ -30,7 +30,7 @@ func main() {
 		json.NewEncoder(w).Encode(map[string]bool{"ok": true})
 	}).Methods(http.MethodGet)
 
-	r.HandleFunc("/", handlers.CreateDocument).Methods(http.MethodPost)
+	r.HandleFunc("/", handlers.CreateDocument).Methods(http.MethodGet)
 
 	srv := &http.Server{
 		Addr:         "0.0.0.0:" + PORT,
