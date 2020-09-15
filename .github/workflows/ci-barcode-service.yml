@@ -1,0 +1,20 @@
+name: Barcide Service Continuous Integration
+on:
+  push:
+    paths:
+    - 'barcode-service/*'
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.14.x
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: cd barcode-service && go build
+      - name: Test
+        run: cd barcode-service && go test -v ./...
