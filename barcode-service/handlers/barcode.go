@@ -3,7 +3,6 @@ package handlers
 import (
 	"image/jpeg"
 	"net/http"
-	"os"
 
 	"github.com/boombuler/barcode/code128"
 )
@@ -18,9 +17,6 @@ func CreateBarcode(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	rw.Header().Set("Content-Type", "image/jpeg")
-
-	f, _ := os.Create("code.png")
-	defer f.Close()
 
 	jpeg.Encode(rw, code, nil)
 

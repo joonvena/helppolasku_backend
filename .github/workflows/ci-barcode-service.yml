@@ -1,4 +1,4 @@
-name: Barcide Service Continuous Integration
+name: Barcode Service Continuous Integration
 on:
   push:
     paths:
