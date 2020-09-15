@@ -1,34 +1,57 @@
 package handlers
 
 import (
-	"net/http"
-	"net/http/httptest"
 	"testing"
+
+	"github.com/go-playground/validator"
 )
 
 func TestValidation(t *testing.T) {
 
-}
+	validate := validator.New()
 
-func TestThatOutputIsCorrect(t *testing.T) {
+	// Check all fields empty.
+	emptyData := &Details{
+		Name:    "",
+		Address: "",
+	}
 
-	// var input Details
+	err := validate.Struct(emptyData)
+	if err == nil {
+		t.Fatal(err)
+	}
 
-	req, err := http.NewRequest("POST", "/", nil)
+	// Check field Name empty.
+	nameMissing := &Details{
+		Name:    "",
+		Address: "Go Street",
+	}
+
+	err = validate.Struct(nameMissing)
+	if err == nil {
+		t.Fatal(err)
+	}
+
+	// Check field Address empty.
+	addressMissing := &Details{
+		Name:    "Test",
+		Address: "",
+	}
+
+	err = validate.Struct(addressMissing)
+	if err == nil {
+		t.Fatal(err)
+	}
+
+	// All fields correct.
+	correct := &Details{
+		Name:    "Test",
+		Address: "Go Street",
+	}
+
+	err = validate.Struct(correct)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(CreateDocument)
-
-	handler.ServeHTTP(rr, req)
-
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("Handler returned wrong status code: got %v want %v", status, http.StatusOK)
-	}
-
-	if output := rr.Header().Get("Content-Type"); output != "application/pdf" {
-		t.Errorf("Doument type was %v instead of %v", output, "application/pdf")
-	}
 }

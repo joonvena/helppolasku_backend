@@ -1,0 +1,20 @@
+name: PDF Service Continuous Integration
+on:
+  push:
+    paths:
+    - 'pdf-service/*'
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.14.x
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: cd pdf-service && go build
+      - name: Test
+        run: cd pdf-service && go test -v ./...
